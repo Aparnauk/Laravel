@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             // $table->bigInteger('user_id'); 
             $table->unsignedBigInteger('user_id')->nullable();
 
-            $table->unsignedBigInteger('user_id')->default(0);
+            // $table->unsignedBigInteger('user_id')->default(0);
 
             //here generate a column named id Primary key
 

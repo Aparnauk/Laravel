@@ -95,24 +95,56 @@ class FrontendController extends Controller
         return view('users.create');
     }
 
-    public function save(){
+    // public function save(Request $request){
 
-        $name = request('name');
-        $email = request('email');
-        $dob = request('date_of_birth');
-        $status = request('status');
+        // $name = request('name');
+        // $email = request('email');
+        // $dob = request('date_of_birth');
+        // $status = request('status');
 
+        // dd($request);
 
-        User::create([
+        // User::create([
            
-            'name'=>$name,
-            'email'=>$email,
-            'date_of_birth'=>$dob,
-            'status'=>$status
+        //     // 'name'=>$name,
+        //     // 'email'=>$email,
+        //     // 'date_of_birth'=>$dob,
+        //     // 'status'=>$status
+        // ]);
+
+        // return "1 Row Inserted";
+    // }
+
+    public function save(Request $request)
+    {
+        // Validating the incoming request
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'date_of_birth' => 'required|date',
+            'status' => 'required|in:active,inactive', // Assuming status can be either "active" or "inactive"
         ]);
+
+       
+
+        // Creating the user only if validation passes
+
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'date_of_birth' => $validatedData['date_of_birth'],
+            'status' => $validatedData['status'],
+        ]);
+
+
+        // dd($validatedData);
+        // dd($request);
+
 
         return "1 Row Inserted";
     }
+
+
 
     // public function aboutController(){
     //     return view('about-controller');
